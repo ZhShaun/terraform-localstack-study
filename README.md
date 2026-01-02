@@ -1,3 +1,6 @@
+# THIS IS FOR PERSONAL STUDY USAGE
+For study purpose I modify the original repositoify to add devcontainer to run the whole environemnt, containerizing the prerequesite installation.
+
 # Testing AWS infrastructure using LocalStack and Terraform Test
 
 This pattern provides a solution to test IaC in Terraform locally without the need to provision infrastructure in AWS. It uses the [Terraform Test framework](https://developer.hashicorp.com/terraform/language/tests) introduced with Terraform version 1.6 and we showcase how to integrate it with LocalStack for Cost Optimization, Speed and Efficiency, Consistency and Reproducibility, Isolation and Safety and Simplified Development Workflow.
