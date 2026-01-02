@@ -70,6 +70,10 @@ The diagram illustrates a CI/CD pipeline for a LocalStack Docker Container setup
 
 **Workflow**
 
+### MODIFICATION
+
+**NOW ALL CONTAINERS ARE UNDER THIS SAME DEVCONTAINER HOST SO NO NEED FOR docker-compose up and down ANYMORE.**
+
 - The user commits code changes to the Source Code Repository (1).
 
 - The CI/CD Pipeline detects the changes and triggers a Build process for static Terraform code analysis and for building the LocalStack Docker container (2) and running the Tests (3). The Test stage runs the tests for our infrastructure against LocalStack without deploying any resources in AWS Cloud (Steps 3-8).
@@ -92,15 +96,17 @@ The LocalStack Docker Container provides a local development environment that em
 
 ## Terraform Test
 
-### Run Local Stack Container
+~~### Run Local Stack Container~~
 
-In the cloned repository start Local Start Docker execution in detached mode by enter the following command in bash shell.
+Just open and build the devcontainer and everything should be fine.
+
+~~In the cloned repository start Local Start Docker execution in detached mode by enter the following command in bash shell.~~
 
 ```shell
 docker compose up -d
 ```
 
-Wait until the Local Stack container is up and running.
+~~Wait until the Local Stack container is up and running.~~
 
 ### Terraform Initialization
 
@@ -133,25 +139,40 @@ Success! 3 passed, 0 failed.
 ```
 
 ### Resource Cleanup
+Because we are tied into the same devcontainer now, to proceed with resource cleanup its better to take slightly more care instead of tearing the whole server down everytime.
 
-Enter the following command to destroy Local Stack Container.
+Resource deletion within terraform api
+```shell
+terraform destroy -auto-approve
+```
+
+**1. In VS Code: Close the remote connection by clicking the green button in the bottom-left corner and selecting "Close Remote Connection" (or just close VS Code).**
+2. (On your Host) Enter the following command to destroy Local Stack Container.
 
 ```shell
 docker compose down
 ```
 
+### A Note on Persistence
+In docker-compose.yml, we have this line: `- "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"`
+
+If you only run terraform destroy, the internal state of LocalStack might still hold some metadata in that ./volume folder.
+
+If you want a truly clean state for a new study session, run docker compose down and then manually delete the ./volume folder on your host machine. Note that `rebuilding with no cache` would not delete the volume mount so the state would persist.
 
 ## Debugging with AWS CLI
 
 ### Run Local Stack Container
 
-In the cloned repository start Local Start Docker execution in detached mode by enter the following command in bash shell.
+*WE ARE ALWAYS ATTACHED NOW SO DETACHED MODE HAS BECOME OBSOLETED.*
+
+~~In the cloned repository start Local Start Docker execution in detached mode by enter the following command in bash shell.~~
 
 ```shell
 docker-compose up -d
 ```
 
-Wait until the Local Stack container is up and running.
+~~Wait until the Local Stack container is up and running.~~
 
 
 ### Authentication
@@ -186,7 +207,8 @@ aws --endpoint-url http://localhost:4566 stepfunctions list-state-machines
 terraform destroy -auto-approve
 ```
 
-Enter the following command to destroy Local Stack Container.
+~~Enter the following command to destroy Local Stack Container.~~
+Use 'Rebuild Container' for a clean OS/Tooling environment, but remember that AWS state will persist unless the host volume is deleted..
 ```shell
 docker compose down
 ```
