@@ -25,6 +25,11 @@ You can simulate different AWS regions, accounts, and service configurations to 
 
 - Docker Compose [installed](https://docs.docker.com/compose/install/).
 
+- **You also need devconatiner extension on VSCODE now.**
+
+### MODIFICATION
+**THE FOLLOWING PACKAGES ARE INSTALLED AND CONTAINED INSIDE THE DEVCONTAINER**
+
 - AWS Command Line Interface (AWS CLI), [installed](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 
 - Terraform CLI, [installed](https://developer.hashicorp.com/terraform/cli) (Terraform documentation).
